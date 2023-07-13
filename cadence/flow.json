@@ -1,0 +1,45 @@
+{
+	"contracts": {
+		"NonFungibleToken": "./contracts/NonFungbleToken.cdc",
+		"PNFT": "./contracts/PNFT.cdc",
+		"ZLocNFT": "./contracts/ZLocNFT.cdc"
+	},
+	"networks": {
+		"emulator": "127.0.0.1:3569",
+		"mainnet": "access.mainnet.nodes.onflow.org:9000",
+		"sandboxnet": "access.sandboxnet.nodes.onflow.org:9000",
+		"testnet": "access.devnet.nodes.onflow.org:9000"
+	},
+	"accounts": {
+		"admin-testnet-1": {
+            "address": "0x4848e38784043ea5",
+            "key": {
+                "type": "hex",
+                "index": 0,
+                "signatureAlgorithm": "ECDSA_secp256k1",
+                "hashAlgorithm": "SHA2_256",
+                "privateKey": "308c39dd5e0e6c9b9e655d120f3e0296a3707146ab4b1e4f7ef8e089a3e69c7c"
+            }
+        },
+		"emulator-account": {
+			"address": "f8d6e0586b0a20c7",
+			"key": "1a05ba433be5af2988e814d1e4fa08f1574140e6cb5649a861cc6377718c51be"
+		}
+	},
+	"deployments": {
+		"emulator": {
+			"emulator-account": [
+				"NonFungibleToken",
+				"ZLocNFT",
+				"PNFT"
+			]
+		},
+		"testnet": {
+			"admin-testnet-1": [
+				"NonFungibleToken",
+				"ZLocNFT",
+				"PNFT"
+			]
+		}
+	}
+}
