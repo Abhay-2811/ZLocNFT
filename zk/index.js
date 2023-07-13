@@ -32,7 +32,7 @@ app.post('/proof',async(req,res)=>{
   try {
 
     const { proof, publicSignals } = await snarkjs.groth16.fullProve(
-      { latitudeRange: req.body.LtR, longitudeRange: req.LoR, location: req.body.loc },
+      { latitudeRange: req.body.LtR, longitudeRange: req.body.LoR, location: req.body.loc },
       'zk_build/InRange_js/InRange.wasm',
       'circuit_0000.zkey'
     );
