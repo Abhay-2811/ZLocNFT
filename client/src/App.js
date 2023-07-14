@@ -1,7 +1,10 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './Pages/Home';
-import Navbar from './Components/NAvbar';
+import Mint from './Pages/Mint';
+import Vote from './Pages/Vote';
+import MintNFT from './Pages/MintNFT';
+import Navbar from './Components/Navbar';
 import './flow/config'
 function App() {
   return (
@@ -9,6 +12,9 @@ function App() {
       <Navbar />
       <Routes>
         <Route exact path='/' element={<Home />}></Route>
+        <Route exact path='/mint' element={<Mint />}></Route>
+        <Route exact path='/vote' element={<Vote />}></Route>
+        <Route exact path='/mintNFT' element={<MintNFT />}></Route>
       </Routes>
     </BrowserRouter>
   );
