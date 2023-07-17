@@ -1,7 +1,7 @@
 import NonFungibleToken from "NonFungibleToken"
 import ZLocNFT from "ZLocNFT"
 
-pub contract PNFT: NonFungibleToken{
+pub contract PlayerNFT: NonFungibleToken{
 
     pub var totalSupply: UInt64;
 
@@ -23,26 +23,26 @@ pub contract PNFT: NonFungibleToken{
         init(
             name: String
         ){
-            self.id = PNFT.totalSupply;
-            PNFT.totalSupply = PNFT.totalSupply + 1;  
+            self.id = PlayerNFT.totalSupply;
+            PlayerNFT.totalSupply = PlayerNFT.totalSupply + 1;  
             self.Player_name = name;
         }
 
         
     }
 
-    pub fun vote(Player_id: UInt64){
+    pub fun vote(Player_id: UInt64, user: Address){
         pre {
             //check if sender has ZLocNFT so they can vote
-            self.account.getCapability(/public/CollectionPublic).borrow<&ZLocNFT.Collection{ZLocNFT.ZlocNFTCollectionPublic}>()!
+            getAccount(user).getCapability(/public/CollectionPublic).borrow<&ZLocNFT.Collection{ZLocNFT.ZlocNFTCollectionPublic}>()!
                             .getIDs().length == 1;
 
             self.AMPs.containsKey(Player_id) : "Player with id doesn't exist"
-            self.votedUsers.contains(UInt64(self.account.getCapability(/public/CollectionPublic).borrow<&ZLocNFT.Collection{ZLocNFT.ZlocNFTCollectionPublic}>()!
+            !self.votedUsers.contains(UInt64(getAccount(user).getCapability(/public/CollectionPublic).borrow<&ZLocNFT.Collection{ZLocNFT.ZlocNFTCollectionPublic}>()!
                             .getIDs()[0])) : "User has already voted"
             }
         self.AMPs[Player_id] = self.AMPs[Player_id]! + 0.01;
-        self.votedUsers.append(self.account.getCapability(/public/CollectionPublic).borrow<&ZLocNFT.Collection{ZLocNFT.ZlocNFTCollectionPublic}>()!
+        self.votedUsers.append(getAccount(user).getCapability(/public/CollectionPublic).borrow<&ZLocNFT.Collection{ZLocNFT.ZlocNFTCollectionPublic}>()!
                             .getIDs()[0])
 
     }
@@ -52,7 +52,7 @@ pub contract PNFT: NonFungibleToken{
         pub fun deposit(token: @NonFungibleToken.NFT)
         pub fun getIDs(): [UInt64]
         pub fun borrowNFT(id: UInt64): &NonFungibleToken.NFT
-        pub fun borrowPNFT(id: UInt64): &PNFT.NFT? {
+        pub fun borrowPNFT(id: UInt64): &PlayerNFT.NFT? {
             post {
                 (result == nil) || (result?.id == id): 
                     "Cannot borrow ExampleNFT reference: the ID of the returned reference is incorrect"
@@ -87,11 +87,11 @@ pub contract PNFT: NonFungibleToken{
             return self.ownedNFTs.keys
         }
 
-        pub fun borrowPNFT(id: UInt64): &PNFT.NFT? {
+        pub fun borrowPNFT(id: UInt64): &PlayerNFT.NFT? {
             if self.ownedNFTs[id] != nil {
                 // Create an authorized reference to allow downcasting
                 let ref = (&self.ownedNFTs[id] as auth &NonFungibleToken.NFT?)!
-                return ref as! &PNFT.NFT
+                return ref as! &PlayerNFT.NFT
             }
 
             return nil
@@ -108,7 +108,7 @@ pub contract PNFT: NonFungibleToken{
 
     pub resource PNFTMinter{
         pub fun createNFT(name: String): @NFT{
-            PNFT.AMPs.insert(key: PNFT.totalSupply,0.0)
+            PlayerNFT.AMPs.insert(key: PlayerNFT.totalSupply,0.0)
             return <- create NFT(name: name);
         }
         
@@ -116,7 +116,7 @@ pub contract PNFT: NonFungibleToken{
 
     init(){
         self.totalSupply = 0;
-        self.account.save(<- create PNFTMinter(), to: /storage/PNFTMinter);
+        self.account.save(<- create PNFTMinter(), to: /storage/PlayerNFTMinter);
         emit ContractInitialized();
         self.AMPs = {};
         self.votedUsers = [];

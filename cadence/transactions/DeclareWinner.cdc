@@ -1,13 +1,17 @@
-import ZLocNFT from 0x45e05daf74108ea8
+import ZLocNFT from 0x3e830d88a864b1a0
 
-transaction(id: UInt64, winningTeam: UInt8){
+transaction(recepient: Address,id: UInt64, team: UInt8, zk_bytes32: String, ticket: UInt64){
+
     prepare(acct: AuthAccount){
         let minter = acct.borrow<&ZLocNFT.NFTMinter>(from: /storage/Minter)!;
-        minter.updateWinner(id: id, winningTeam: (winningTeam))
-
+        let publicRef = getAccount(recepient).getCapability(/public/CollectionPublic)
+                            .borrow<&ZLocNFT.Collection{ZLocNFT.ZlocNFTCollectionPublic}>()
+                            ?? panic("No Collection Found in recepient")
+        publicRef.deposit(token: <- minter.createNFT(matchID: id, team: team, zk: zk_bytes32, ticket: ticket))
+        log(acct.address)
     }
-
+    
     execute{
-        log("Winner Updated")
+        log("NFT minted")
     }
 }

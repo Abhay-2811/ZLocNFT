@@ -1,7 +1,7 @@
 {
 	"contracts": {
 		"NonFungibleToken": "./contracts/NonFungbleToken.cdc",
-		"PNFT": "./contracts/PNFT.cdc",
+		"PlayerNFT": "./contracts/PlayerNFT.cdc",
 		"ZLocNFT": "./contracts/ZLocNFT.cdc"
 	},
 	"networks": {
@@ -21,6 +21,26 @@
                 "privateKey": "308c39dd5e0e6c9b9e655d120f3e0296a3707146ab4b1e4f7ef8e089a3e69c7c"
             }
         },
+		"admin-testnet-2": {
+            "address": "0xcb20cd1f08decd61",
+            "key": {
+                "type": "hex",
+                "index": 0,
+                "signatureAlgorithm": "ECDSA_secp256k1",
+                "hashAlgorithm": "SHA3_256",
+                "privateKey": "6bc781c4970c6b2a4f743108b804bd9dcd8c9c4c81e6ae936414d21c89bcbff9"
+            }
+        },
+		"admin-testnet-3": {
+            "address": "0x3e830d88a864b1a0",
+            "key": {
+                "type": "hex",
+                "index": 0,
+                "signatureAlgorithm": "ECDSA_secp256k1",
+                "hashAlgorithm": "SHA3_256",
+                "privateKey": "987ab2b973c8b81d9aa4f9081d58a895ea2f562b5403a75d7879add279a47189"
+            }
+        },
 		"emulator-account": {
 			"address": "f8d6e0586b0a20c7",
 			"key": "1a05ba433be5af2988e814d1e4fa08f1574140e6cb5649a861cc6377718c51be"
@@ -31,14 +51,15 @@
 			"emulator-account": [
 				"NonFungibleToken",
 				"ZLocNFT",
-				"PNFT"
+				"PlayerNFT"
 			]
 		},
 		"testnet": {
-			"admin-testnet-1": [
+
+			"admin-testnet-3": [
 				"NonFungibleToken",
 				"ZLocNFT",
-				"PNFT"
+				"PlayerNFT"
 			]
 		}
 	}

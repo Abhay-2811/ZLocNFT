@@ -1,5 +1,5 @@
-import ZLocNFT from 0x45e05daf74108ea8
-import NonFungibleToken from 0x45e05daf74108ea8
+import ZLocNFT from 0x3e830d88a864b1a0
+import NonFungibleToken from 0x3e830d88a864b1a0
 
 transaction {
 

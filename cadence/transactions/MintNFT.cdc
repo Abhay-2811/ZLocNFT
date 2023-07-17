@@ -1,4 +1,4 @@
-import ZLocNFT from 0x45e05daf74108ea8
+import ZLocNFT from 0x3e830d88a864b1a0
 
 transaction(recepient: Address, matchID: UInt64, teamCode : UInt8){
 
